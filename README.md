@@ -1,32 +1,45 @@
 # Hackintosh EFI for HP Envy 13-ad1xx  
 **Updated for 2025 – Supports macOS Ventura, Sonoma, and Sequoia**
 
-This EFI is an enhanced version of the OpenCore MOD EFI originally developed by [Olarila](https://olarila.com/). I’ve customized it to optimize compatibility and functionality for the HP Envy 13-ad1xx, ensuring it works seamlessly with the latest macOS releases as of March 2025. Key improvements include the addition of `SSDT-XOSI.aml`, an updated `VoodooPS2.kext` for trackpad fixes, resolved Bluetooth issues for Broadcom cards, and added Wi-Fi functionality. This EFI is tailored for stability and performance on Ventura (13.x), Sonoma (14.x), and Sequoia (15.x).
+This EFI is a customized and optimized version of the OpenCore MOD EFI originally developed by [Olarila](https://olarila.com/), tailored specifically for the **HP Envy 13-ad1xx** series. It provides reliable compatibility with **macOS Ventura (13.x)**, **Sonoma (14.x)**, and **Sequoia (15.x)** as of March 2025.
 
-## Key Enhancements
-- **SSDT-XOSI.aml**: Integrated to improve ACPI compatibility by redirecting OSI calls, ensuring better power management and hardware recognition across macOS versions.
-- **Updated VoodooPS2.kext**: Upgraded to the latest version (debug build recommended for Sequoia) to fix trackpad issues, providing smoother and more reliable input on the HP Envy 13-ad1xx.
-- **Broadcom Bluetooth Fix**: Addressed Bluetooth connectivity for Broadcom cards (e.g., BCM94352HMB) by adjusting kexts like `BrcmPatchRAM3.kext` and `BrcmBluetoothInjector.kext`, ensuring full functionality.
-- **Wi-Fi Support**: Added support for Wi-Fi using compatible Broadcom or Intel cards (e.g., with `AirportBrcmFixup.kext` or `itlwm.kext`), depending on your hardware configuration.
+The EFI is ready to use — **no tweaks required** unless you encounter specific issues.
 
-## Installation and Configuration
-To use this EFI effectively, follow these steps:
+## 🔧 Key Features
+- **Pre-configured for Plug-and-Play Booting**  
+  Includes `SSDT-XOSI.aml`, `VoodooPS2.kext`, and all necessary kexts and patches for trackpad, Intel Wi-Fi/Bluetooth, and power management.
+- **Supports Intel Wireless Only**  
+  Compatible with Intel Wi-Fi/Bluetooth cards like **AX200** and **AX201** using `itlwm.kext` and `IntelBluetoothFirmware.kext`.
+- **Tested Across macOS Versions**  
+  Verified working on **Ventura**, **Sonoma**, and **Sequoia** (including latest beta builds).
 
-1. **Download the EFI**: Obtain the latest version from the provided source (e.g., a GitHub repository or Olarila’s site) and copy it to your EFI partition.
-2. **Customize SMBIOS**: Inject your unique SMBIOS data into the `config.plist` file to ensure proper macOS recognition and avoid hardware ID conflicts. Use [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS) to generate a unique SMBIOS (e.g., MacBookPro14,1 or iMac18,1) with a valid serial number, MLB, and UUID. Refer to the [Dortania OpenCore Install Guide](https://dortania.github.io/OpenCore-Install-Guide/extras/smbios-support.html#miscellaneous-smbios) for detailed instructions.
-   - Open `config.plist` with a tool like [ProperTree](https://github.com/corpnewt/ProperTree) or OpenCore Configurator.
-   - Update the `PlatformInfo` section with your generated values (e.g., `SystemSerialNumber`, `MLB`, `SystemUUID`).
-3. **Hardware Compatibility**: Verify your Wi-Fi/Bluetooth card (e.g., Broadcom BCM94360NG or Intel AX200 with `itlwm`) matches the kexts included. For Broadcom, ensure `AirportBrcmFixup.kext` and related patches are active. For Intel, use `itlwm.kext` and `IntelBluetoothFirmware.kext`.
-4. **BIOS Settings**: Update to the latest HP Envy 13-ad1xx BIOS (e.g., F.18 or later) and disable CFG-Lock, VT-d, and Secure Boot if possible to avoid boot issues.
-5. **Testing**: Boot with verbose mode (`-v` boot arg) to troubleshoot. Adjust `boot-args` (e.g., `-lilubetaall`, `amfi_get_out_of_my_way=1`) in `config.plist` if needed for Sequoia compatibility.
+## 🚀 Quick Start
 
-## Notes and Considerations
-- **Stability**: Tested on Ventura, Sonoma, and Sequoia betas as of March 2025. Sequoia may require additional tweaks (e.g., disabling legacy Broadcom support) due to Apple’s evolving hardware requirements.
-- **Limitations**: Audio (e.g., Realtek ALC283) and external display (via Type-C) may need further patching (e.g., `SSDT-HPET` or `WhateverGreen` adjustments). Check Olarila forums or Dortania guides for updates.
-- **Safety**: Use a separate drive or USB installer for initial testing to avoid disrupting existing macOS installs. Disable SIP partially (e.g., `csr-active-config=0x67`) if kext loading fails.
-- **Community Feedback**: Share your experience on hackintosh forums or X to help refine this EFI for others with the HP Envy 13-ad1xx.
+1. **Download the EFI**  
+   Get the latest prebuilt EFI from the [Releases Section](https://github.com/Noobyetpro/Hp-Envy-13-ad1xx-hackintosh/releases) and copy it directly to your EFI partition.
 
-## Credits
-This build builds upon Olarila’s OpenCore MOD EFI foundation. Special thanks to the hackintosh community, including Dortania’s guides and CorpNewt’s tools, for enabling these customizations.
+2. **Inject SMBIOS Info**  
+   Use [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS) to generate a unique SMBIOS (e.g., MacBookPro14,1 or iMac18,1). You can flash the SMBIOS Directly with GenSMBIOS.
+
+3. **BIOS Settings**  
+   Make sure your HP Envy’s BIOS is updated (F.18 or newer recommended). Disable **VT-d**, **CFG-Lock**, and **Secure Boot** if available.
+
+4. **Boot macOS Installer**  
+   Use a USB installer created with macOS Ventura/Sonoma/Sequoia. Boot with this EFI and proceed with installation.
+
+## 🛠 Tweaks and Troubleshooting
+All tweak-related info (e.g., boot-args, SIP, external display patches) has been moved to the [**TWEAKS.md**](./TWEAKS.md) file.  
+Check it out **only if you run into issues** or need to customize for different hardware variations.
+
+## ⚠️ Notes
+- **No Tweaks Needed by Default** – Everything works out-of-the-box for most HP Envy 13-ad1xx models.
+- **SIP** – Partially disabled (0x67) by default for compatibility.
+- **Audio/USB-C Display** – May need extra patches. See [TWEAKS.md](./TWEAKS.md) for more details.
+
+## 🙏 Credits
+Based on the original EFI by **Olarila**. Big thanks to the Hackintosh community, especially:
+- [Dortania Guides](https://dortania.github.io/OpenCore-Install-Guide/)
+- [CorpNewt’s Tools](https://github.com/corpnewt)
+- The many testers and contributors on Hackintosh forums & Discords
 
 
