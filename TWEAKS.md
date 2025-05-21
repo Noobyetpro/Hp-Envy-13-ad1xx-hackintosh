@@ -88,4 +88,4 @@ The HP Envy 13-ad1xx typically uses **Realtek ALC283**.
 
 If audio doesn’t work:
 - Ensure `AppleALC.kext` is loaded
-- Try layout IDs like `3`, `11`, or `13` in:
+- Try layout IDs like `3`, `11`, or `13` 
